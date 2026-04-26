@@ -1,0 +1,76 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: react/package-lock.json
+
+      - name: Install React dependencies
+        working-directory: react
+        run: npm ci
+
+      - name: Build React
+        working-directory: react
+        run: npm run build
+
+      # ─── Write SSH key ─────────────────────────────────────────
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.GCP_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ secrets.GCP_HOST }}" >> ~/.ssh/known_hosts
+
+      # ─── Shared assets ──────────────────────────────────────────
+      - name: Deploy shared assets
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }} \
+            "mkdir -p /var/www/shared/assets"
+          scp -i ~/.ssh/deploy_key -r shared/assets/. \
+            ${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }}:/var/www/shared/assets/
+
+      # ─── React dist ─────────────────────────────────────────────
+      - name: Deploy React build
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }} \
+            "mkdir -p /var/www/react/dist"
+          scp -i ~/.ssh/deploy_key -r react/dist/. \
+            ${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }}:/var/www/react/dist/
+
+      # ─── PHP sources ─────────────────────────────────────────────
+      - name: Deploy PHP source
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }} \
+            "mkdir -p /var/www/php/assets /var/www/php/components"
+          scp -i ~/.ssh/deploy_key php/index.php \
+            ${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }}:/var/www/php/index.php
+          scp -i ~/.ssh/deploy_key -r php/assets/. \
+            ${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }}:/var/www/php/assets/
+          scp -i ~/.ssh/deploy_key -r php/components/. \
+            ${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }}:/var/www/php/components/
+
+      # ─── Symlink shared assets for PHP ───────────────────────────
+      - name: Create shared symlink for PHP
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }} \
+            "ln -sfn /var/www/shared/assets /var/www/php/shared"
+
+      # ─── Reload Nginx ────────────────────────────────────────────
+      - name: Reload Nginx
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }} \
+            "sudo nginx -t && sudo systemctl reload nginx"

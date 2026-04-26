@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "DM Serif Display", serif;
+  --font-sans:    "DM Sans", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", monospace;
+
+  --color-canvas:   #0a0a0a;
+  --color-surface:  #111111;
+  --color-card:     #181818;
+  --color-edge:     #2a2a2a;
+  --color-text:     #f0f0f0;
+  --color-muted:    #888888;
+  --color-accent:   #f59e0b;
+  --color-accent-d: #d97706;
+}
+
+/* ─── CSS custom properties (shared with PHP naming convention) ── */
+:root {
+  --bg:          #0a0a0a;
+  --bg-surface:  #111111;
+  --bg-card:     #181818;
+  --border:      #2a2a2a;
+  --text:        #f0f0f0;
+  --text-muted:  #888888;
+  --accent:      #f59e0b;
+  --accent-hover:#d97706;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+body { margin: 0; }
+
+/* ─── Grain overlay ─────────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* ─── Custom cursor (desktop only) ──────────────────────────────── */
+@media (hover: hover) {
+  html { cursor: none; }
+  a, button, [role="button"] { cursor: none; }
+}
+
+::selection { background: rgba(245,158,11,0.25); color: var(--text); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p /c/Users/Swet21/Documents/website/.claude/skills)",
+      "Bash(curl -fsSL -o /c/Users/Swet21/Documents/website/.claude/skills/react-best-practices.md https://raw.githubusercontent.com/vercel-labs/agent-skills/main/skills/react-best-practices/SKILL.md)",
+      "Bash(echo \"exit:$?\")",
+      "Bash(curl -fsSL -o /c/Users/Swet21/Documents/website/.claude/skills/ui-ux.md https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-ux-pro-max/SKILL.md)",
+      "Bash(npm install *)"
+    ]
+  }
+}

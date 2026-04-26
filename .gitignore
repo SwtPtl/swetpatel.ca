@@ -1,0 +1,44 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# monorepo
+react/node_modules/
+react/dist/
+
+# root-level legacy scaffold (real project lives in react/)
+/src/
+/public/
+/vite.config.ts
+/tsconfig.json
+/tsconfig.app.json
+/tsconfig.node.json
+/eslint.config.js
+/index.html
+/package.json
+/package-lock.json
+
+# generated assets
+shared/assets/favicon.ico
+shared/assets/favicon-32.png
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
