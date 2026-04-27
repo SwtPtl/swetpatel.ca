@@ -28,6 +28,9 @@ react/dist/
 /package.json
 /package-lock.json
 
+# local dev only — on GCP this is a symlink created by deploy.yml
+php/shared/
+
 # generated assets
 shared/assets/favicon.ico
 shared/assets/favicon-32.png
@@ -42,3 +45,6 @@ shared/assets/favicon-32.png
 *.njsproj
 *.sln
 *.sw?
+
+#ssh keys
+.ssh/
