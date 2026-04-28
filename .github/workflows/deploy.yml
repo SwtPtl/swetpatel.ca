@@ -69,8 +69,10 @@ jobs:
           ssh -i ~/.ssh/deploy_key ${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }} \
             "ln -sfn /var/www/shared/assets /var/www/php/shared"
 
-      # ─── Reload Nginx ────────────────────────────────────────────
-      - name: Reload Nginx
+      # ─── Nginx config ───────────────────────────────────────────
+      - name: Deploy Nginx config
         run: |
+          scp -i ~/.ssh/deploy_key nginx.conf \
+            ${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }}:/tmp/swetpatel.conf
           ssh -i ~/.ssh/deploy_key ${{ secrets.GCP_USER }}@${{ secrets.GCP_HOST }} \
-            "sudo nginx -t && sudo systemctl reload nginx"
+            "sudo cp /tmp/swetpatel.conf /etc/nginx/sites-available/swetpatel.ca && sudo nginx -t && sudo systemctl reload nginx"
