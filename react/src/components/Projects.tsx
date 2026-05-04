@@ -9,27 +9,33 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
-    name:   'AI Agent Job Pipeline',
-    desc:   'Automated end-to-end job application system: scraping, resume tailoring, cover letter generation.',
-    tags:   ['Python', 'n8n', 'Gemini 2.5 Pro', 'JobSpy', 'RAG'],
+    name:   'OpenApply — AI Job Application Suite',
+    desc:   'Chrome extension scrapes job postings and routes them to a FastAPI backend. RAG pipeline tailors resume content via Claude/Gemini/DeepSeek, compiles LaTeX PDFs, and tracks applications — all on-device.',
+    tags:   ['Python', 'TypeScript', 'FastAPI', 'RAG', 'LLM APIs', 'Docker', 'SQLite'],
     github: 'https://github.com/SwtPtl',
   },
   {
-    name:   'Directional Strangle System',
-    desc:   'Options trading signal engine for QQQ/SPY opening-hour strangles with live IBKR execution.',
-    tags:   ['Pine Script', 'Python', 'ib_insync', 'IBKR', 'Black-Scholes'],
+    name:   'swetpatel.ca — Dual-Stack Portfolio',
+    desc:   'The same portfolio built twice — React/Vite/Tailwind and zero-dependency PHP 8.3 — deployed side-by-side on one VM. Live stack toggle, Nginx reverse proxy, GitHub Actions CI/CD, strict security headers.',
+    tags:   ['React', 'TypeScript', 'PHP 8.3', 'Nginx', 'GitHub Actions'],
+    github: 'https://github.com/SwtPtl/swetpatel.ca',
+  },
+  {
+    name:   'Real-Time Collaborative Curling Game',
+    desc:   '30+ concurrent connections at sub-150ms latency with a 60Hz server-side tick rate. Event batching and delta compression keep client state in sync. HTML5 Canvas physics and collision detection. 85% code coverage.',
+    tags:   ['Node.js', 'Socket.IO', 'HTML5 Canvas', 'Docker', 'Oracle Cloud'],
     github: 'https://github.com/SwtPtl',
   },
   {
-    name:   'KeePassXC + GPGME Fork',
-    desc:   'Extended KeePassXC with integrated PGP key management via GPGME — phased open-source fork.',
-    tags:   ['C++', 'CMake', 'Qt', 'GPGME', 'libgpg-error'],
+    name:   'HinLIBS — Library Management System',
+    desc:   'Desktop library management app in C++/Qt. Layered DAO architecture, 6-table SQLite schema, RBAC for 3 user types, fine calculation, and loan validation across 2,400+ lines. 25+ unit tests.',
+    tags:   ['C++', 'Qt', 'SQLite', 'Git'],
     github: 'https://github.com/SwtPtl',
   },
   {
-    name:   'OS Page Replacement Simulator',
-    desc:   'Implemented LRU, FIFO, and Second Chance page replacement in C for COMP 3000.',
-    tags:   ['C', 'vmsim', 'FIFO', 'LRU', 'Second Chance'],
+    name:   'Health & Fitness Club Management',
+    desc:   '12-table PostgreSQL schema with 18 foreign key relationships covering scheduling, billing, and trainer allocation. 18 RESTful endpoints with RBAC middleware. Query optimization cut execution time by 75%. 82% coverage.',
+    tags:   ['Python', 'PostgreSQL', 'SQLAlchemy', 'REST APIs'],
     github: 'https://github.com/SwtPtl',
   },
 ]
